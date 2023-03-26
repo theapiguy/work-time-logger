@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Work Log Report</title>
+</head>
+<body>
+<h2 style="margin-left:  10px;">Work Time Report</h2>
+<form action="/search" method="post">
+    <p>
+        <label for="work_date">Work Date:</label>
+        <input type="date" id="work_date" name="work_date">
+    </p>
+    <input type="submit" value="Submit">
+</form>
+{% if results %}
+    <br>
+    <table border="1">
+        <tr>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Ticket #</th>
+            <th>Description</th>
+            <th>Time Spent (hrs)</th>
+        </tr>
+        {% for result in results %}
+            <tr>
+                <td>{{result.start_time}}</td>
+                <td>{{result.end_time}}</td>
+                <td>{{result.ticket_number}}</td>
+                <td>{{result.description}}</td>
+                <td>{{result.elapsed_time}}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+</body>
+</html>
