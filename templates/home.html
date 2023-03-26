@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Work Time Logger</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+
+        p {
+            margin-left: 10px;
+        }
+
+        #main {
+            margin-left:  10px;
+        }
+
+        contentDiv {
+            bottom-border: solid;
+        }
+        span.thick {
+          font-weight: bold;
+        }
+        p.sep {
+            margin-bottom: .01em;
+        }
+    </style>
+    <script>
+        function ssSwitch(){
+            var ss = document.getElementById("start-stop");
+            if (ss.value == "Start") ss.value = "Stop";
+            else ss.value = "Start";
+        }
+    </script>
+</head>
+<body>
+<h2 style="margin-left:  10px;">Work Time Logger</h2>
+
+    <div id="main">
+        <p><a href="/search" target="_blank">Report</a></p>
+        <form action="" method="post">
+            <p>
+                <label for="jira_number">Jira:</label>
+                <input id="jira_number" name="jira_number" required="" type="text" value="{{work_dict.jira_number}}" {{work_dict.ed}}>
+            </p>
+            {% if work_dict.show_work_description %}
+            <p>
+                <label for="work_description">Work Description:</label><br>
+                <textarea id="work_description" name="work_description" rows="4" cols="100"></textarea>
+            </p>
+            {% endif %}
+            <p>
+                <input id="start-stop" name="start-stop" type="submit" value="{{work_dict.button_value}}">
+            </p>
+        </form>
+        {% if message %}
+            <p>{{message}}</p>
+        {% endif %}
+        {% if today_work %}
+            {% for work in today_work %}
+                <div>
+                    <p class="sep"><span class="thick">Log ID:&nbsp;&nbsp;</span>{{work.log_id}}</p><br>
+                    <p class="sep"><span class="thick">Start Time:&nbsp;&nbsp;</span>{{work.start_time}}</p><br>
+                    <p class="sep"><span class="thick">End Time:&nbsp;&nbsp;</span>{{work.end_time}}</p><br>
+                    <p class="sep"><span class="thick">Ticket #:&nbsp;&nbsp;</span>{{work.ticket_number}}</p><br>
+                    <p class="sep"><span class="thick">Description:&nbsp;&nbsp;</span>{{work.description}}</p><br>
+                    <p class="sep"><span class="thick">Time Spend:&nbsp;&nbsp;</span>{{work.elapsed_time}} hours</p><br>
+                </div>
+                <hr>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+</body>
+</html>
